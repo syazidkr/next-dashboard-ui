@@ -64,12 +64,12 @@ const StudentListPage = () => {
       <td className="hidden md:table-cell">{item.address}</td>
       <td>
         <div className="flex items-center justify-center gap-2">
-          <Link href={'/List/teachers/${item.id}'}>
+          <Link href={`/list/students/${item.id}`}>
             <button className="w-7 h-7 flex items-center justify-center bg-lamaSky rounded-full">
               <Image src="/view.png" alt="" width={16} height={16}/>
             </button>
           </Link>
-          <Link href={'/List/teachers/${item.id}'}>
+          <Link href={`/list/students/${item.id}`}>
             {role === "admin" && <button className="w-7 h-7 flex items-center justify-center bg-lamaPurple rounded-full">
               <Image src="/delete.png" alt="" width={16} height={16}/>
             </button>}
