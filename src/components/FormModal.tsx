@@ -1,7 +1,23 @@
 "use client"
+import dynamic from "next/dynamic";
 import Image from "next/image"
 import { useState } from "react";
-import TeacherForm from "./forms/TeacherForm";
+// import TeacherForm from "./forms/TeacherForm";
+// import StudentForm from "./forms/StudentForm";
+
+const TeacherForm = dynamic(()=>import("./forms/TeacherForm"), {
+  loading: ()=><h1>Loading...</h1>
+});
+const StudentForm = dynamic(()=>import("./forms/StudentForm"), {
+  loading: ()=><h1>Loading...</h1>
+});
+
+const forms : {
+  [key:string]:(type:"create"|"update", data?:any) => JSX.Element;
+}={
+  teacher: (type, data) => <TeacherForm type={type} data={data}/>,
+  student: (type, data) => <StudentForm type={type} data={data}/>,
+}
 
 const FormModal = ({
   table, 
@@ -46,9 +62,9 @@ const FormModal = ({
         <span className="text-center font-medium">All data will be lost. Are you sure you want to delete this {table}</span>
         <button className="bg-red-700 text-white py-2 px-4 rounded-md border-none w-max self-center">Delete</button>
       </form> 
-    ) : (
-      <TeacherForm type="create"/>
-    );
+    ) : type === "create" || type === "update" ? (
+      forms[table](type, data)
+    ) : "Form not found!";
   };
 
   return (
